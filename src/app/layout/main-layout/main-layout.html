@@ -1,0 +1,20 @@
+<div class="app-layout">
+
+  <app-sidebar
+    [collapsed]="sidebarCollapsed"
+  ></app-sidebar>
+
+  <div
+    class="main-content"
+    [class.expanded]="sidebarCollapsed"
+  >
+
+    <app-toolbar
+      (toggleSidebarEvent)="toggleSidebar()"
+    ></app-toolbar>
+
+    <app-notes-page></app-notes-page>
+
+  </div>
+
+</div>

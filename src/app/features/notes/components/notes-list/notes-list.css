@@ -1,0 +1,48 @@
+.note-item {
+
+  padding: 20px 24px;
+
+  cursor: pointer;
+
+  border-bottom: 1px solid var(--border-color);
+
+  transition: 0.2s;
+
+  background: transparent;
+}
+
+/* HOVER */
+
+.note-item:hover {
+
+  background: var(--hover-color);
+}
+
+/* ACTIVA */
+
+.note-item.active {
+
+  background: var(--active-color);
+}
+
+/* TITULO */
+
+.note-item h4 {
+
+  margin-bottom: 8px;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  color: var(--text-color);
+}
+
+/* TEXTO */
+
+.note-item p {
+
+  font-size: 15px;
+
+  color: #9ca3af;
+}

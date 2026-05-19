@@ -1,0 +1,136 @@
+.editor-wrapper {
+
+  flex: 1;
+
+  width: 100%;
+
+  height: 100%;
+
+  padding: 20px;
+
+  background: var(--editor-bg);
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+/* TOOLBAR */
+
+::ng-deep .ql-toolbar {
+
+  border: 1px solid var(--border-color) !important;
+
+  border-bottom: none !important;
+
+  background: var(--toolbar-bg);
+
+  border-radius: 14px 14px 0 0;
+
+  padding: 14px;
+}
+
+/* CONTENEDOR */
+
+::ng-deep .ql-container {
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  border: 1px solid var(--border-color) !important;
+
+  background: var(--editor-bg);
+
+  color: var(--text-color);
+
+  border-radius: 0 0 14px 14px;
+
+  overflow: hidden;
+}
+
+/* EDITOR */
+
+::ng-deep .ql-editor {
+
+  flex: 1;
+
+  width: 100%;
+
+  min-height: calc(100vh - 180px);
+
+  padding: 30px;
+
+  font-size: 18px;
+
+  line-height: 1.8;
+
+  color: var(--text-color);
+
+  overflow-y: auto;
+}
+
+/* PLACEHOLDER */
+
+::ng-deep .ql-editor.ql-blank::before {
+
+  color: #9ca3af !important;
+
+  font-style: italic;
+}
+
+/* ICONOS */
+
+::ng-deep .ql-stroke {
+  stroke: var(--text-color) !important;
+}
+
+::ng-deep .ql-fill {
+  fill: var(--text-color) !important;
+}
+
+::ng-deep .ql-picker {
+  color: var(--text-color) !important;
+}
+
+::ng-deep .ql-picker-label {
+  color: var(--text-color) !important;
+}
+
+/* BOTONES */
+
+::ng-deep .ql-toolbar button {
+
+  color: var(--text-color) !important;
+
+  transition: 0.2s;
+}
+
+::ng-deep .ql-toolbar button:hover {
+
+  background: var(--hover-color);
+
+  border-radius: 6px;
+}
+
+/* ACTIVE */
+
+::ng-deep .ql-active {
+
+  background: var(--hover-color);
+
+  border-radius: 6px;
+}
+
+/* MENUS */
+
+::ng-deep .ql-picker-options {
+
+  background: var(--toolbar-bg) !important;
+
+  border: 1px solid var(--border-color) !important;
+
+  color: var(--text-color);
+}

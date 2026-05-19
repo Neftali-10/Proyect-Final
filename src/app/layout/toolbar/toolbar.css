@@ -1,0 +1,108 @@
+.toolbar {
+
+  height: 84px;
+
+  background: var(--toolbar-bg);
+
+  border-bottom: 1px solid var(--border-color);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 0 20px;
+}
+
+/* LEFT */
+
+.toolbar-left {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+}
+
+/* RIGHT */
+
+.toolbar-right {
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+/* TITLE */
+
+.title-input {
+
+  width: 320px;
+
+  border: 1px solid var(--border-color);
+
+  background: transparent;
+
+  color: var(--text-color);
+
+  border-radius: 12px;
+
+  padding: 14px 18px;
+
+  font-size: 18px;
+
+  outline: none;
+}
+
+/* SEARCH */
+
+.search-box input {
+
+  width: 240px;
+
+  border: 1px solid var(--border-color);
+
+  background: transparent;
+
+  color: var(--text-color);
+
+  border-radius: 12px;
+
+  padding: 12px 16px;
+
+  outline: none;
+}
+
+/* BUTTONS */
+
+.menu-btn,
+.theme-btn {
+
+  width: 46px;
+
+  height: 46px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: var(--hover-color);
+
+  color: var(--text-color);
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  transition: 0.2s;
+}
+
+.menu-btn:hover,
+.theme-btn:hover {
+
+  background: var(--active-color);
+}

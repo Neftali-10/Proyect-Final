@@ -1,0 +1,76 @@
+.sidebar {
+
+  width: 320px;
+
+  min-width: 320px;
+
+  height: 100vh;
+
+  background: var(--sidebar-bg);
+
+  border-right: 1px solid var(--border-color);
+
+  transition: 0.3s ease;
+
+  overflow: hidden;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+.sidebar.collapsed {
+
+  width: 0;
+
+  min-width: 0;
+
+  border-right: none;
+}
+
+.sidebar-header {
+
+  padding: 24px;
+}
+
+.sidebar-header h2 {
+
+  margin-bottom: 20px;
+
+  color: var(--text-color);
+}
+
+.new-note-btn {
+
+  width: 100%;
+
+  padding: 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: var(--button-bg);
+
+  color: var(--button-text);
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.new-note-btn:hover {
+
+  opacity: 0.9;
+}
+
+.notes-container {
+
+  flex: 1;
+
+  overflow-y: auto;
+}

@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.snow.css';
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+* {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+  font-family: 'Inter', sans-serif;
+}
+
+html,
+body {
+
+  height: 100%;
+}
+
+/* LIGHT */
+
+:root {
+
+  --bg-color: #f5f6f8;
+
+  --sidebar-bg: #ffffff;
+
+  --editor-bg: #ffffff;
+
+  --toolbar-bg: #ffffff;
+
+  --text-color: #111827;
+
+  --border-color: #e5e7eb;
+
+  --hover-color: #f3f4f6;
+
+  --active-color: #dbeafe;
+
+  --button-bg: #dbeafe;
+
+  --button-text: #2563eb;
+}
+
+/* DARK */
+
+.dark-theme {
+
+  --bg-color: #111111;
+
+  --sidebar-bg: #151515;
+
+  --editor-bg: #111111;
+
+  --toolbar-bg: #151515;
+
+  --text-color: #ffffff;
+
+  --border-color: #2a2a2a;
+
+  --hover-color: #222222;
+
+  --active-color: #333333;
+
+  --button-bg: #1e40af;
+
+  --button-text: #ffffff;
+}
