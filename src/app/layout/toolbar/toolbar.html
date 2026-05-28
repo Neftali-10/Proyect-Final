@@ -26,12 +26,18 @@
 
     <div class="toolbar-meta">
 
-        <span>
-          Creada: Hoy
+       <span>
+
+          Creada:
+          {{ fechaCreacion || '-' }}
+
         </span>
 
         <span>
-          Actualizada: Hace 1 min
+
+          Actualizada:
+          {{ fechaActualizacion || '-' }}
+
         </span>
 
       </div>
@@ -44,12 +50,14 @@
 
     <!-- STATUS -->
 
-    <div class="save-status">
+    <div
+      class="save-status"
+      *ngIf="mensajeGuardado"
+    >
 
       ✔ Guardado
 
     </div>
-
     <!-- SAVE -->
 
     <button class="save-btn"

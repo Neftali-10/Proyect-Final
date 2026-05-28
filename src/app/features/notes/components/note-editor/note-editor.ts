@@ -1,12 +1,14 @@
 import {
   Component,
   Input,
+  Output,
+  EventEmitter,
   OnChanges
 } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-
 import { QuillModule } from 'ngx-quill';
+import {CommonModule} from '@angular/common';
 
 import {
   Subject,
@@ -28,7 +30,8 @@ import {
 
   imports: [
     FormsModule,
-    QuillModule
+    QuillModule,
+    CommonModule,
   ],
 
   templateUrl: './note-editor.html',
@@ -40,6 +43,10 @@ implements OnChanges {
 
   @Input()
   nota: Nota | null = null;
+
+  @Output()
+  contenidoActualizado =
+  new EventEmitter<string>();
 
   content = '';
 
@@ -101,7 +108,14 @@ implements OnChanges {
               }
 
             )
-            .subscribe();
+            .subscribe({
+              next: () => {
+
+                console.log(
+                  'Autosave completado'
+                );
+              }
+            });
         }
       });
   }
@@ -117,14 +131,19 @@ implements OnChanges {
 
   onContentChanged() {
 
-    if (this.nota) {
+  if (this.nota) {
 
-      this.nota.contenido =
-        this.content;
-    }
+    this.nota.contenido =
+      this.content;
 
-    this.saveSubject
-      .next(this.content);
+    /* EMITIR */
+
+    this.contenidoActualizado
+      .emit(this.content);
   }
+
+  this.saveSubject
+    .next(this.content);
+}
 
 }

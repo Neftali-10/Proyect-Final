@@ -23,6 +23,7 @@
         [titulo]="
         notaSeleccionada?.titulo || ''
       "
+      [mensajeGuardado]="mensajeGuardado"
 
       (tituloChange)="
         actualizarTitulo($event)
@@ -35,12 +36,25 @@
       (toggleSidebarEvent)="
         toggleSidebar()
       "
+      [fechaCreacion]="
+
+    formatFecha(
+    notaSeleccionada?.fechaCreacion
+      )"
+
+    [fechaActualizacion]="
+    formatFecha(
+      notaSeleccionada?.fechaActualizacion
+    )"
       
     ></app-toolbar>
 
     <app-notes-page
 
       [notaSeleccionada]="notaSeleccionada"
+
+      (contenidoActualizado)="
+        sincronizarContenido($event)"
 
     ></app-notes-page>
 

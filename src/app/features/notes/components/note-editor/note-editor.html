@@ -1,14 +1,42 @@
 <div class="editor-wrapper">
 
+  <!-- EMPTY STATE -->
+
+  <div
+    class="empty-state"
+    *ngIf="!nota"
+  >
+
+    <div class="empty-icon">
+      📝
+    </div>
+
+    <h2>
+      Selecciona una nota
+    </h2>
+
+    <p>
+      Elige una nota del sidebar
+      o crea una nueva.
+    </p>
+
+  </div>
+
+  <!-- EDITOR -->
+
   <quill-editor
 
-     [(ngModel)]="content"
+    *ngIf="nota as notaActual"
+
+    [(ngModel)]="content"
 
     [modules]="modules"
 
     placeholder="Empieza a escribir..."
 
-    (ngModelChange)="onContentChanged()"
+    (ngModelChange)="
+      onContentChanged()
+    "
 
   ></quill-editor>
 

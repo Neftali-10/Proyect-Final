@@ -12,6 +12,8 @@ import {
 import {
   ThemeService
 } from '../../core/services/theme.service';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-toolbar',
@@ -19,7 +21,7 @@ import {
   standalone: true,
 
   imports: [
-    FormsModule
+    FormsModule,CommonModule
   ],
 
   templateUrl: './toolbar.html',
@@ -27,6 +29,9 @@ import {
   styleUrl: './toolbar.css'
 })
 export class Toolbar {
+
+  @Input()
+  mensajeGuardado = false;
 
   @Input()
   titulo = '';
@@ -46,6 +51,12 @@ export class Toolbar {
   @Output()
   toggleSidebarEvent =
     new EventEmitter<void>();
+
+  @Input()
+  fechaCreacion = '';
+
+  @Input()
+  fechaActualizacion = '';
 
   constructor(
     public themeService:

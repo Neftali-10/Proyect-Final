@@ -1,25 +1,15 @@
 import {
   Component,
-  OnInit
+  OnInit,
+  ChangeDetectorRef
 } from '@angular/core';
-
-import { Sidebar }
-from '../sidebar/sidebar';
-
-import { Toolbar }
-from '../toolbar/toolbar';
-
-import { NotesPage }
-from '../../features/notes/pages/notes-page/notes-page';
-
-import { Nota }
-from '../../core/models/note.model';
-
-import { NotasService }
-from '../../core/services/notes.service';
-
-import { CommonModule }
-from '@angular/common';
+import { Sidebar } from '../sidebar/sidebar';
+import { Toolbar } from '../toolbar/toolbar';
+import { NotesPage } from '../../features/notes/pages/notes-page/notes-page';
+import { Nota } from '../../core/models/note.model';
+import { NotasService } from '../../core/services/notes.service';
+import { CommonModule } from '@angular/common';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-main-layout',
@@ -30,7 +20,8 @@ from '@angular/common';
     CommonModule,
     Sidebar,
     Toolbar,
-    NotesPage
+    NotesPage,
+    
   ],
 
   templateUrl: './main-layout.html',
@@ -42,6 +33,10 @@ implements OnInit {
 
   sidebarCollapsed = false;
 
+  mensajeGuardado = false;
+
+  loading = false;
+
   notas: Nota[] = [];
 
   notaSeleccionada:
@@ -49,7 +44,10 @@ implements OnInit {
 
   constructor(
     private notasService:
-      NotasService
+      NotasService,
+
+    private cdr:
+    ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -59,16 +57,31 @@ implements OnInit {
 
   cargarNotas() {
 
-    this.notasService
-      .getNotas()
-      .subscribe({
+  this.loading = true;
 
-        next: (notas) => {
+  this.notasService
+    .getNotas()
+    .subscribe({
 
-          this.notas = notas;
-        }
-      });
-  }
+      next: (notas) => {
+
+        /* NUEVO ARRAY */
+
+        this.notas = [...notas];
+
+        this.loading = false;
+
+        /* FORZAR RENDER */
+
+        this.cdr.detectChanges();
+      },
+
+      error: () => {
+
+        this.loading = false;
+      }
+    });
+}
 
   toggleSidebar() {
 
@@ -83,49 +96,114 @@ implements OnInit {
 
   crearNota() {
 
-    this.notasService
-      .crearNota({
+  this.notasService
+    .crearNota({
 
-        titulo: 'Nueva nota',
+      titulo: 'Nueva nota',
 
-        contenido: '',
+      contenido: '',
 
-        fechaCreacion: '',
+      fechaCreacion: '',
 
-        fechaActualizacion: ''
+      fechaActualizacion: ''
 
-      })
-      .subscribe({
+    })
+    .subscribe({
 
-        next: (notaCreada) => {
+      next: (notaCreada) => {
 
-          this.notas = [
-            notaCreada,
-            ...this.notas
-          ];
+        /* NUEVO ARRAY */
 
-          this.notaSeleccionada =
-            notaCreada;
-        }
-      });
-  }
+        this.notas = [
+          notaCreada,
+          ...this.notas
+        ];
+
+        /* SELECCIONAR */
+
+        this.notaSeleccionada = {
+          ...notaCreada
+        };
+        /* FORZAR RENDER */
+        this.cdr.detectChanges();
+      }
+    });
+}
 
   eliminarNota(nota: Nota) {
 
     if (!nota.id) return;
 
-    this.notasService
-      .eliminarNota(nota.id)
-      .subscribe({
+    Swal.fire({
 
-        next: () => {
+      title: '¿Eliminar nota?',
 
-          this.notas =
-            this.notas.filter(
-              n => n.id !== nota.id
-            );
-        }
-      });
+      text:
+        'Esta acción no se puede deshacer.',
+
+      icon: 'warning',
+
+      showCancelButton: true,
+
+      confirmButtonText: 'Eliminar',
+
+      cancelButtonText: 'Cancelar',
+
+      confirmButtonColor: '#ef4444',
+
+      cancelButtonColor: '#64748b',
+
+      background: '#ffffff',
+
+      color: '#111827'
+
+    }).then((result) => {
+
+      if (result.isConfirmed) {
+
+        this.notasService
+          .eliminarNota(nota.id!)
+          .subscribe({
+
+            next: () => {
+
+              this.notas =
+                this.notas.filter(
+                  n => n.id !== nota.id
+                );
+
+                this.notas = [
+                  ...this.notas
+                ];
+
+                this.cdr.detectChanges();
+
+              if (
+                this.notaSeleccionada?.id
+                === nota.id
+              ) {
+
+                this.notaSeleccionada =
+                  null;
+              }
+
+              Swal.fire({
+
+                title: 'Eliminada',
+
+                text:
+                  'La nota fue eliminada.',
+
+                icon: 'success',
+
+                timer: 1200,
+
+                showConfirmButton: false
+              });
+            }
+          });
+      }
+    });
   }
   
     actualizarTitulo(
@@ -171,7 +249,7 @@ implements OnInit {
         .subscribe();
     }
 
-  guardarNota() {
+    guardarNota() {
 
   if (
     !this.notaSeleccionada ||
@@ -195,8 +273,22 @@ implements OnInit {
       }
 
     )
-    .subscribe();
-  }
+    .subscribe({
+
+      next: () => {
+
+        this.mensajeGuardado =
+          true;
+
+        setTimeout(() => {
+
+          this.mensajeGuardado =
+            false;
+
+        }, 1500);
+      }
+    });
+}
 
     eliminarNotaActual() {
 
@@ -207,5 +299,57 @@ implements OnInit {
       this.notaSeleccionada
     );
   }
+
+  formatFecha(
+  fecha?: string
+): string {
+
+  if (!fecha) return '-';
+
+  const d = new Date(fecha);
+
+  return d.toLocaleDateString(
+    'es-GT',
+    {
+
+      day: '2-digit',
+
+      month: 'short',
+
+      year: 'numeric'
+    }
+    );
+  }
+
+  sincronizarContenido(
+  contenido: string
+) {
+
+  if (!this.notaSeleccionada)
+    return;
+
+  this.notaSeleccionada = {
+
+    ...this.notaSeleccionada,
+
+    contenido
+  };
+
+  this.notas = this.notas.map(n =>
+
+    n.id === this.notaSeleccionada?.id
+
+      ? {
+
+          ...n,
+
+          contenido
+        }
+
+      : n
+  );
+
+  this.cdr.detectChanges();
+}
 
 }

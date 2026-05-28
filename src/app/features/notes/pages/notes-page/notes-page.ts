@@ -1,6 +1,8 @@
 import {
   Component,
-  Input
+  Input,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
 import {
@@ -28,5 +30,17 @@ export class NotesPage {
   @Input()
   notaSeleccionada:
     Nota | null = null;
+
+  @Output()
+  contenidoActualizado =
+  new EventEmitter<string>();
+
+  actualizarContenido(
+    contenido: string
+  ) {
+
+    this.contenidoActualizado
+      .emit(contenido);
+  }
 
 }
