@@ -1,8 +1,25 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges
+} from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 
 import { QuillModule } from 'ngx-quill';
+
+import {
+  Subject,
+  debounceTime
+} from 'rxjs';
+
+import {
+  Nota
+} from '../../../../core/models/note.model';
+
+import {
+  NotasService
+} from '../../../../core/services/notes.service';
 
 @Component({
   selector: 'app-note-editor',
@@ -18,13 +35,23 @@ import { QuillModule } from 'ngx-quill';
 
   styleUrl: './note-editor.css'
 })
-export class NoteEditor {
+export class NoteEditor
+implements OnChanges {
+
+  @Input()
+  nota: Nota | null = null;
 
   content = '';
 
+  private saveSubject =
+    new Subject<string>();
+
   modules = {
+
     toolbar: [
+
       [{ font: [] }],
+
       [{ header: [1, 2, 3, false] }],
 
       [{ size: [] }],
@@ -33,14 +60,71 @@ export class NoteEditor {
 
       [{ align: [] }],
 
-      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ list: 'ordered' },
+       { list: 'bullet' }],
 
       ['link', 'code-block'],
 
-      [{ color: [] }, { background: [] }],
+      [{ color: [] },
+       { background: [] }],
 
       ['clean']
     ]
   };
+
+  constructor(
+    private notasService:
+      NotasService
+  ) {
+
+    /* AUTOSAVE */
+
+    this.saveSubject
+      .pipe(
+        debounceTime(1000)
+      )
+      .subscribe(content => {
+
+        if (
+          this.nota &&
+          this.nota.id
+        ) {
+
+          this.notasService
+            .actualizarNota(
+
+              this.nota.id,
+
+              {
+
+                contenido: content
+              }
+
+            )
+            .subscribe();
+        }
+      });
+  }
+
+  ngOnChanges(): void {
+
+    if (this.nota) {
+
+      this.content =
+        this.nota.contenido;
+    }
+  }
+
+  onContentChanged() {
+
+    if (this.nota) {
+
+      this.nota.contenido =
+        this.content;
+    }
+
+    this.saveSubject
+      .next(this.content);
+  }
 
 }

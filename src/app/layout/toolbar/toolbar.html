@@ -9,24 +9,67 @@
       ☰
     </button>
 
-    <input
-      class="title-input"
-      type="text"
-      placeholder="Título de la nota"
-    />
+    <div class="title-area">
+
+      <input
+
+        class="title-input"
+
+        type="text"
+
+        placeholder="Título de la nota"
+
+        [(ngModel)]="titulo"
+
+        (ngModelChange)="onTituloChange()"
+      />
+
+    <div class="toolbar-meta">
+
+        <span>
+          Creada: Hoy
+        </span>
+
+        <span>
+          Actualizada: Hace 1 min
+        </span>
+
+      </div>
+
+    </div>
 
   </div>
 
   <div class="toolbar-right">
 
-    <div class="search-box">
+    <!-- STATUS -->
 
-      <input
-        type="text"
-        placeholder="Buscar Notas..."
-      />
+    <div class="save-status">
+
+      ✔ Guardado
 
     </div>
+
+    <!-- SAVE -->
+
+    <button class="save-btn"
+    (click)="guardarNota()">
+      
+
+      💾 
+
+    </button>
+
+    <!-- DELETE -->
+
+    <button class="delete-btn-top"
+    (click)="eliminarNota()">
+
+      🗑
+
+    </button>
+
+    <!-- THEME -->
 
     <button
       class="theme-btn"

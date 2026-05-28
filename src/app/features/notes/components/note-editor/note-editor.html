@@ -2,11 +2,13 @@
 
   <quill-editor
 
-    [(ngModel)]="content"
+     [(ngModel)]="content"
 
     [modules]="modules"
 
     placeholder="Empieza a escribir..."
+
+    (ngModelChange)="onContentChanged()"
 
   ></quill-editor>
 

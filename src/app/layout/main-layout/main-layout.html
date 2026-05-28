@@ -1,19 +1,48 @@
 <div class="app-layout">
 
   <app-sidebar
+
     [collapsed]="sidebarCollapsed"
+
+    [notas]="notas"
+
+    [notaSeleccionada]="notaSeleccionada"
+
+    (seleccionar)="seleccionarNota($event)"
+
+    (nueva)="crearNota()"
+
+    (eliminar)="eliminarNota($event)"
+
   ></app-sidebar>
 
-  <div
-    class="main-content"
-    [class.expanded]="sidebarCollapsed"
-  >
+  <div class="main-content">
 
     <app-toolbar
-      (toggleSidebarEvent)="toggleSidebar()"
+
+        [titulo]="
+        notaSeleccionada?.titulo || ''
+      "
+
+      (tituloChange)="
+        actualizarTitulo($event)
+      "
+
+      (guardar)="guardarNota()"
+
+      (eliminar)="eliminarNotaActual()"
+
+      (toggleSidebarEvent)="
+        toggleSidebar()
+      "
+      
     ></app-toolbar>
 
-    <app-notes-page></app-notes-page>
+    <app-notes-page
+
+      [notaSeleccionada]="notaSeleccionada"
+
+    ></app-notes-page>
 
   </div>
 

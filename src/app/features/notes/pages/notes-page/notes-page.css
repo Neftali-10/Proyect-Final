@@ -1,4 +1,28 @@
-.notes-page {
-  flex: 1;
+.notes-layout {
+
+  display: flex;
+
+  height: calc(100vh - 80px);
+
   overflow: hidden;
+}
+
+/* SIDEBAR */
+
+app-sidebar {
+
+  width: 320px;
+
+  min-width: 320px;
+
+  height: 100%;
+}
+
+/* EDITOR */
+
+app-note-editor {
+
+  flex: 1;
+
+  height: 100%;
 }

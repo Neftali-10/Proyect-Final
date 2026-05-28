@@ -1,10 +1,32 @@
-import { Component } from '@angular/core';
-import { NoteEditor } from '../../components/note-editor/note-editor';
+import {
+  Component,
+  Input
+} from '@angular/core';
+
+import {
+  Nota
+} from '../../../../core/models/note.model';
+
+import { NoteEditor }
+from '../../components/note-editor/note-editor';
 
 @Component({
   selector: 'app-notes-page',
-  imports: [NoteEditor],
+
+  standalone: true,
+
+  imports: [
+    NoteEditor
+  ],
+
   templateUrl: './notes-page.html',
-  styleUrl: './notes-page.css',
+
+  styleUrl: './notes-page.css'
 })
-export class NotesPage {}
+export class NotesPage {
+
+  @Input()
+  notaSeleccionada:
+    Nota | null = null;
+
+}

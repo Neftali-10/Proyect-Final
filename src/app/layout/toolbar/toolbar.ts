@@ -1,15 +1,26 @@
 import {
   Component,
   Output,
-  EventEmitter
+  EventEmitter,
+  Input
 } from '@angular/core';
 
-import { ThemeService } from '../../core/services/theme.service';
+import {
+  FormsModule
+} from '@angular/forms';
+
+import {
+  ThemeService
+} from '../../core/services/theme.service';
 
 @Component({
   selector: 'app-toolbar',
 
   standalone: true,
+
+  imports: [
+    FormsModule
+  ],
 
   templateUrl: './toolbar.html',
 
@@ -17,20 +28,56 @@ import { ThemeService } from '../../core/services/theme.service';
 })
 export class Toolbar {
 
+  @Input()
+  titulo = '';
+
+  @Output()
+  tituloChange =
+    new EventEmitter<string>();
+
+  @Output()
+  guardar =
+    new EventEmitter<void>();
+
+  @Output()
+  eliminar =
+    new EventEmitter<void>();
+
   @Output()
   toggleSidebarEvent =
     new EventEmitter<void>();
 
   constructor(
-    public themeService: ThemeService
+    public themeService:
+      ThemeService
   ) {}
 
   toggleTheme() {
-    this.themeService.toggleTheme();
+
+    this.themeService
+      .toggleTheme();
   }
 
   toggleSidebar() {
-    this.toggleSidebarEvent.emit();
+
+    this.toggleSidebarEvent
+      .emit();
+  }
+
+  onTituloChange() {
+
+    this.tituloChange
+      .emit(this.titulo);
+  }
+
+  guardarNota() {
+
+    this.guardar.emit();
+  }
+
+  eliminarNota() {
+
+    this.eliminar.emit();
   }
 
 }

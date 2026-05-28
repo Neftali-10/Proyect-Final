@@ -7,16 +7,79 @@
 
     <h2>Notes</h2>
 
-    <button class="new-note-btn">
+    <button
+      class="new-note-btn"
+      (click)="crearNota()"
+    >
       + Nueva Nota
     </button>
 
   </div>
 
-  <div class="notes-container">
+  <div class="sidebar-search">
 
-    <app-notes-list></app-notes-list>
+    <input
+    type="text"
+    placeholder="Buscar notas..."
+    [(ngModel)]="searchTerm"
+    (input)="filtrarNotas()"
+    
+    />
 
   </div>
+
+  <div class="sidebar-section">
+
+    <span>
+      TODAS LAS NOTAS {{ notasFiltradas.length }}
+    </span>
+
+  </div>
+
+  <div class="notes-container">
+
+    <div
+
+      class="note-item"
+
+      *ngFor="
+        let nota of notasFiltradas
+      "
+
+      (click)="seleccionarNota(nota)"
+
+      [class.active]="
+        notaSeleccionada?.id === nota.id
+      "
+    >
+
+      <div class="note-header">
+
+        <h4>{{ nota.titulo }}</h4>
+
+        <button
+
+          class="delete-btn"
+
+          (click)="
+            eliminarNota($event, nota)
+          "
+        >
+          🗑
+        </button>
+
+      </div>
+
+      <p>
+        {{ limpiarHtml(nota.contenido) }}
+      </p>
+
+    </div>
+
+  </div>
+
+  <span>
+    Elvia Guit & Neftali Alegría
+  </span>
 
 </div>
